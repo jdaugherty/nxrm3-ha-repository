@@ -148,6 +148,16 @@ pvc:
   volumeClaimTemplate:
     enabled: false
 
+# attach optional custom volumes to each mounted pod
+customSharedStorage: {}
+#  customVolumes:
+#    - name: mount-point-name
+#      persistentVolumeClaim:
+#        claimName: "shared-blob-pvc"
+#  customVolumeMounts:
+#    - name: mount-point-name
+#      mountPath: /shared
+
 service:  #Nexus Repo NodePort Service
   nexus:
     enabled: false

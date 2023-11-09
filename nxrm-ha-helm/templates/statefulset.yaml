@@ -114,6 +114,9 @@ spec:
           -Dnexus.datastore.nexus.username=${DB_USER} \
           -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
           volumeMounts:
+            {{- if .Values.customSharedStorage.customVolumeMounts }}
+            {{- toYaml .Values.customSharedStorage.customVolumeMounts | nindent 12 }}
+            {{- end }}
           {{- if or .Values.aws.secretmanager.enabled .Values.azure.keyvault.enabled .Values.secret.dbSecret.enabled }}
             - name: nxrm-secrets
               mountPath: /nxrm-secrets
@@ -153,6 +156,9 @@ spec:
           resources:
             {{ toYaml .Values.statefulset.taskLogContainer.resources | nindent 12 }}
       volumes:
+      {{- if .Values.customSharedStorage.customVolumes }}
+        {{- toYaml .Values.customSharedStorage.customVolumes | nindent 8 }}
+      {{- end }}
       {{- if or .Values.aws.secretmanager.enabled .Values.azure.keyvault.enabled .Values.secret.dbSecret.enabled }}
         - name: nxrm-secrets
         {{- if or .Values.aws.secretmanager.enabled .Values.azure.keyvault.enabled }}
